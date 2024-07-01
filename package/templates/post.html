@@ -18,7 +18,7 @@
       {% endif %}
       <div class="d-flex flex-md-column justify-content-center flex-wrap">
         <p class="bold fw-4 fs-5 m-0">Published By</p>
-        <a href="#" class="text-decoration-none mx-1 pt-1">{{ post.author.username }}</a>
+        <a href="{{url_for("users.user_post", username=post.author.username)}}" class="text-decoration-none mx-1 pt-1">{{ post.author.username }}</a>
         <p class="m-0 pt-1 mx-1">on</p>
         <p class="pt-1 m-0">{{ post.date_posted.strftime('%d %B %Y') }}</p>
       </div>

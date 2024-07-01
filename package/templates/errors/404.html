@@ -1,0 +1,13 @@
+{% extends "layouts.html" %}
+{% block content %}
+    <div class="content-section d-flex flex-sm-row flex-column">
+        <div class="text-center mx-5 mt-3 d-flex flex-column">
+            <h1 class="">404 Error</h1>
+            <h3 class="">Page not found<h3>
+            <small class="fs-5">Your search has reached beyond the known universe</small>
+        </div>
+        <div>
+            <img height="800px" class="rounded img-fluid" src="{{url_for("static", filename="error_pics/pexels-photo-586056.jpeg")}}"/>
+        </div>
+    </div>
+{% endblock content%}

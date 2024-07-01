@@ -1,0 +1,12 @@
+{% extends "layouts.html" %}
+{% block content %}
+    <div class="content-section d-flex flex-sm-row flex-column">
+        <div class="text-center mx-5 mt-3 d-flex flex-column">
+            <h1 class="">403 Error</h1>
+            <h3 class="">You don't hae permission to access this page<h3>
+        </div>
+        <div>
+            <img height="800px" class="rounded img-fluid" src="{{url_for("static", filename="error_pics/403.png")}}"/>
+        </div>
+    </div>
+{% endblock content%}
