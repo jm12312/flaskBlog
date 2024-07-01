@@ -8,3 +8,4 @@ python-dotenv
 Pillow
 WTForms
 Flask-WTF
+email-validator
