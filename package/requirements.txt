@@ -1,2 +1,10 @@
 Flask
-Gunicorn
+gunicorn
+Flask-SQLAlchemy
+Flask-Bcrypt
+Flask-Login
+Flask-Mail
+python-dotenv
+Pillow
+WTForms
+Flask-WTF
