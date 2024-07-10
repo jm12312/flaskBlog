@@ -9,3 +9,4 @@ Pillow
 WTForms
 Flask-WTF
 email-validator
+flask-migrate
