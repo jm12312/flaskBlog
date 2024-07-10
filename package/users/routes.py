@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import  current_user, login_user, logout_user
 from package import db, bcrypt
-from package.models import Post, User
+from package.models import Post, User, Comment, Like
 from package.users.forms import RegistrationForm, LoginForm, UpdateForm, RequestResetForm, ResetPasswordForm
 from package.users.utils import save_img, send_reset
 
@@ -68,9 +68,11 @@ def user_post(username):
     pg = request.args.get("page", 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(author=user).order_by(Post.date_posted.desc()).paginate(per_page=3, page=pg)
-    return render_template("user_posts.html", posts=posts, user=user)
-
-
+    comments = Comment.query.filter_by(u_id=user.id).all()
+    likes=0
+    for post in Post.query.filter_by(author=user).all():
+        likes += post.like_count
+    return render_template("user_posts.html", posts=posts, user=user, comm = comments, len= len(comments), likes=likes)
 
 
 @users.route("/request-password", methods=["GET", "POST"])

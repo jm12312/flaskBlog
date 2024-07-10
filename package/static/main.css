@@ -3,3 +3,13 @@ body{
     padding: 0px 0px;
     height: 100vh;
 }
+
+
+@media (min-width: 768px) {
+    .overflow-auto-md{
+        overflow: auto;
+    }
+    .mediumheight{
+        max-height: 80vh;
+    }
+}

@@ -1,6 +1,7 @@
 {% extends 'layouts.html' %}
 {% block content %}
-  <div class="container bg-light rounded text-black d-flex py-3 justify-content-center my-3 flex-md-row flex-column">
+<div class="bg-light rounded text-black my-4 mx-3">
+  <div class="container d-flex py-3 justify-content-center my-3 flex-md-row flex-column">
     <div class="d-flex align-items-center justify-content-center">
       <img class="rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image) }}" style="width: 100px;  height: 100px;" />
     </div>
@@ -41,4 +42,15 @@
       </div>
     </div>
   </div>
+  <div class="d-flex justify-content-around bg-info">
+    <form method="post" action="{{url_for("posts.like_post", id=post.id)}}">
+      {% if current_user.is_authenticated and post.has_liked(current_user)%}
+      <button id="like" type="submit" class="bg-info border-0 text-primary pb-2 d-flex"><p class="pe-2 pt-1 m-0 fw-semibold">Like</p><img src="{{url_for("static", filename="icons/image2.png")}}" class="mt-2 me-1"  style="width: 15px; height: 15px;"></img><p class="pt-1 my-0 fw-semibold"> ({{like_post}})</p></button>
+      {%  else %}
+      <button  id="like" type="submit" class="bg-info border-0 text-primary pb-2 d-flex"><p class="pe-2 pt-1 m-0 fw-semibold">Like</p><img src="{{url_for("static", filename="icons/image.png")}}"  class="mt-2 me-1" style="width: 15px; height: 15px;"></img><p class="pt-1 my-0 fw-semibold"> ({{like_post}})</p></button>
+      {% endif %}
+    </form>
+    <a href="{{url_for("comment.new_comment", p_id=post.id)}}" class="text-decoration-none pt-1">Comment 💬</a>
+  </div>
+</div>
 {% endblock %}

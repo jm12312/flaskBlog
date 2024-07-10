@@ -1,21 +1,34 @@
 {% extends 'layouts.html' %}
 {% block content %}
-  <h2 class="text-center">Posts by {{user.username}} ({{posts.total}})</h2>
-  {% for post in posts.items %}
-    <div class="container bg-light rounded text-black d-flex py-3 justify-content-center my-3 flex-md-row flex-column">
-      <div class="d-flex align-items-center justify-content-center">
-        <img class="rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image) }}" style="width: 100px;  height: 100px;" />
-      </div>
-      <div class="flex-fill text-center mx-3 py-3">
-        <a class="title fs-4 text-decoration-none text-black" href="{{ url_for('posts.post', id=post.id) }}">{{ post.title }}</a>
+  <div class="col d-flex justify-content-start shadow-lg">
+    <img src="{{url_for("static" , filename="profile_pics/"+user.image) }}" class="p-md-3" style="width: 300px;  height: 300px;" />
+    <div class="pt-3 px-4">  
+      <h4>{{user.username}}</h4>
+      <h4>Total posts: {{posts.total}}</h4>
+      <h4>Comments sent: {{len}}</h4>  
+      <h4>Total likes received: {{likes}}</h4>  
+    </div>
 
-        <p class="mt-3">{{ post.content }}</p>
+  </div>
+  <h2 class="text-center">Posts by {{ user.username }} ({{ posts.total }})</h2>
+  {% for post in posts.items %}
+    <div class="bg-light rounded text-black my-4 mx-3">
+      <div class="container d-flex py-3 justify-content-center my-3 flex-md-row flex-column">
+
+        <div class="flex-fill text-center mx-3 py-3">
+          <a class="title fs-4 text-decoration-none text-black" href="{{ url_for('posts.post', id=post.id) }}">{{ post.title }}</a>
+
+          <p class="mt-3">{{ post.content }}</p>
+        </div>
+        <div class="d-flex flex-md-column justify-content-center flex-wrap">
+          <p class="bold fw-4 fs-5 m-0">Published By</p>
+          <a href="{{ url_for('users.user_post', username=post.author.username) }}" class="text-decoration-none mx-1 pt-1">{{ post.author.username }}</a>
+          <p class="m-0 pt-1 mx-1">on</p>
+          <p class="pt-1 m-0">{{ post.date_posted.strftime('%d %B %Y') }}</p>
+        </div>
       </div>
-      <div class="d-flex flex-md-column justify-content-center flex-wrap">
-        <p class="bold fw-4 fs-5 m-0">Published By</p>
-        <a href="{{url_for("users.user_post", username=post.author.username)}}" class="text-decoration-none mx-1 pt-1">{{ post.author.username }}</a>
-        <p class="m-0 pt-1 mx-1">on</p>
-        <p class="pt-1 m-0">{{ post.date_posted.strftime('%d %B %Y') }}</p>
+      <div class="d-flex justify-content-center bg-info">
+        <a href="{{ url_for('comment.new_comment', p_id=post.id) }}" class="text-decoration-none">Comment 💬</a>
       </div>
     </div>
   {% endfor %}

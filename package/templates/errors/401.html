@@ -1,0 +1,13 @@
+{% extends "layouts.html" %}
+{% block content %}
+    <div class="content-section d-flex flex-sm-row flex-column">
+        <div class="text-center mx-5 mt-3 d-flex flex-column">
+            <h1 class="">401 Error</h1>
+            <h3 class="">You don't have permission to access this page. Log in first<h3>
+            <a class="btn btn-primary" href="{{url_for("users.login")}}">Log in</a>
+        </div>
+        <div>
+            <img height="800px" class="rounded img-fluid" src="{{url_for("static", filename="error_pics/401-status-code.png")}}"/>
+        </div>
+    </div>
+{% endblock content%}

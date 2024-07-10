@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for, request,
 from flask_login import login_required, current_user
 from package import db
 from package.posts.forms import PostForm
-from package.models import Post
+from package.models import Post, Like
 
 posts = Blueprint("posts", __name__)
 
@@ -21,10 +21,27 @@ def new_post():
     return render_template("create_post.html", title="New Post", form=form)
 
 
-@posts.route("/post/<int:id>")
+@posts.route("/post/<int:id>", methods=["GET", "POST"])
 def post(id):
     post = Post.query.get_or_404(id)
-    return render_template("post.html", title=post.title, post=post)
+    like_post = Like.query.filter_by(p_id=id).all()
+    return render_template("post.html", title=post.title, post=post, like_post=len(like_post))
+
+@posts.route("/post/<int:id>/like", methods=["POST"])
+@login_required
+def like_post(id):
+    like = Like.query.filter_by(u_id=current_user.id, p_id=id).first()
+    # print(Like.query.filter_by(u_id=current_user.id, p_id=id).all())
+    if like:
+        db.session.delete(like)
+        db.session.commit()
+    else:
+        new_like = Like(u_id=current_user.id, p_id=id)
+        db.session.add(new_like)
+        db.session.commit()
+    return redirect(url_for('posts.post', id=id))
+
+
 
 @posts.route("/post/<int:id>/update", methods=["GET", "POST"])
 @login_required

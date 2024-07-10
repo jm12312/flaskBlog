@@ -5,9 +5,9 @@ from flask_login import LoginManager
 from flask_mail import Mail
 import os
 from dotenv import load_dotenv
+from flask_migrate import Migrate
 
 load_dotenv()
-
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -28,6 +28,7 @@ def create_app():
     app.config["MAIL_PASSWORD"] = os.environ.get("EMAIL_PASS")
         
     db.init_app(app)
+    migrate = Migrate(app, db)
     bcrypt.init_app(app)
     loginManager.init_app(app)
     # loginManager.login_view = "users.login"
@@ -36,10 +37,12 @@ def create_app():
     from package.users.routes import users
     from package.posts.routes import posts
     from package.main.routes import main
+    from package.comments.routes import comment
     from package.errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
     app.register_blueprint(errors)
+    app.register_blueprint(comment)
 
     return app
